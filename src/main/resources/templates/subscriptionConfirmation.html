@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>구독 확인</title>
+</head>
+<body>
+<h1>구독 확인</h1>
+
+<!-- 구독을 완료하는 폼 -->
+<form action="/subscribe" method="post">
+    <!-- 서버에서 받아온 telegramUserId를 폼에 포함하여 전송 -->
+    <input type="hidden" name="telegramUserId" id="telegramUserId" th:value="${telegramUserId}">
+    <button type="submit">구독하기</button>
+</form>
+
+</body>
+</html>

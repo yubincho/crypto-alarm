@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>알림 구독</title>
+</head>
+<body>
+<h1>알림 구독</h1>
+
+<p>텔레그램 봇과 대화를 시작하여 알림을 활성화하세요.</p>
+<a th:href="@{${botLink}}" target="_blank">텔레그램 봇 시작하기</a>
+
+
+<p>텔레그램 봇과 대화를 완료한 후, 아래 버튼을 클릭하여 구독을 완료하세요.</p>
+<a href="/subscribe/confirmation">구독하기</a>
+
+<!--<form action="/subscribe" method="post">-->
+<!--    &lt;!&ndash; 서버에서 받아온 telegramUserId를 폼에 포함하여 전송 &ndash;&gt;-->
+<!--    <input type="hidden" name="telegramUserId" id="telegramUserId" th:value="${telegramUserId}">-->
+<!--    <button type="submit">구독하기</button>-->
+<!--</form>-->
+
+<script>
+
+    let telegramUserId = document.getElementById("telegramUserId").value;
+    console.log(telegramUserId);
+
+
+    // 텔레그램 봇에서 사용자 ID를 받아오는 로직 (대략적인 예시)
+    // function setTelegramUserId(telegramUserId) {
+    //     document.getElementById("telegramUserId").value = telegramUserId;
+    // }
+    //
+    // // 실제로는 텔레그램 봇과의 상호작용을 통해 이 값을 받아야 함
+    // setTelegramUserId('123456789'); // 실제 사용자 ID로 대체 필요
+</script>
+</body>
+</html>
