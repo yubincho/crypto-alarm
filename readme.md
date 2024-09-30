@@ -1,4 +1,5 @@
-# 비트코인 투자 알림 서비스  ![image](https://github.com/user-attachments/assets/af4df438-aba2-4ac4-92e7-1e6214280d5a)
+# 비트코인 투자 알림 서비스  
+![image](https://github.com/user-attachments/assets/748a03ad-c00c-4efd-8279-6074559653db)
 
 
 
