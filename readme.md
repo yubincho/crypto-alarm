@@ -45,15 +45,29 @@
 
 ### WebSocket 연결
 
-[기존 내용 유지]
+업비트 WebSocket API를 사용하여 실시간 데이터를 수신합니다. 브라우저에서 직접 WebSocket 연결을 설정합니다:
+
+```javascript
+let socket = new WebSocket('wss://api.upbit.com/websocket/v1');
+```
 
 ### 데이터 처리
 
-[기존 내용 유지]
+WebSocket으로부터 수신된 데이터는 ArrayBuffer 형식으로 오기 때문에, 이를 적절히 처리하여 JSON으로 변환합니다:
+
+```javascript
+socket.onmessage = function(event) {
+    if (event.data instanceof ArrayBuffer) {
+        var text = new TextDecoder().decode(event.data);
+        var jsonData = JSON.parse(text);
+        // 데이터 처리 로직
+    }
+};
+```
 
 ### 보안 설정
 
-[기존 내용 유지]
+세션 관리를 위해 Spring Security 설정에서 `SessionCreationPolicy.IF_REQUIRED`를 사용합니다.
 
 ### 텔레그램 봇 연동
 
@@ -82,17 +96,56 @@ public class TelegramNotificationService {
 
 ## 문제 해결 기록
 
-[기존 내용 유지]
+### 세션 관리 문제
 
-### 텔레그램 봇 인증 문제
+**문제**: 뷰 화면에 로그인이 정상적으로 반영되지 않음
 
-**문제**: 텔레그램 봇 토큰 인증 실패
+**해결**: Spring Security 설정에서 `SessionCreationPolicy.IF_REQUIRED` 사용
 
-**해결**: 환경 변수 또는 프로퍼티 파일에서 올바른 봇 토큰을 설정하고, 애플리케이션 시작 시 이를 제대로 로드하는지 확인
-
-```properties
-telegram.bot.token=YOUR_BOT_TOKEN_HERE
+```java
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 ```
+
+### WebSocket URL 스키마 오류
+
+**문제**: WebSocket URL 사용 시 "The URL's scheme must be either 'http:' or 'https:'. 'wss:' is not allowed" 오류 발생
+
+**해결**: 브라우저에서 직접 WebSocket을 사용하도록 변경
+
+```javascript
+let socket = new WebSocket('wss://api.upbit.com/websocket/v1');
+```
+
+참고: https://github.com/sockjs/sockjs-client/issues/452
+
+### ArrayBuffer 데이터 처리
+
+**문제**: "Unexpected token 'o', '[object ArrayBuffer]' is not valid JSON" 오류 발생
+
+**해결**: ArrayBuffer 데이터를 텍스트로 변환 후 JSON으로 파싱
+
+```javascript
+socket.onmessage = function(event) {
+    if (event.data instanceof ArrayBuffer) {
+        var text = new TextDecoder().decode(event.data);
+        var jsonData = JSON.parse(text);
+        if (jsonData.type === 'ticker') {
+            var price = jsonData.trade_price;
+            document.getElementById("price").innerText = "Current BTC Price: " + price;
+        }
+        console.log("Received message:", jsonData);
+    } else {
+        console.log("Received unknown data type");
+    }
+};
+```
+
+**설명**:
+1. ArrayBuffer 처리: `instanceof ArrayBuffer`를 사용하여 데이터 타입 확인
+2. 텍스트 변환: `TextDecoder`를 사용하여 바이너리 데이터를 텍스트로 변환
+3. JSON 파싱: `JSON.parse()`를 사용하여 텍스트를 JSON 객체로 변환
+4. 데이터 처리: 변환된 JSON 데이터에서 필요한 정보 추출 및 표시
+
 
 ## 기여 방법
 
