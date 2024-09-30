@@ -97,6 +97,46 @@ public class TelegramNotificationService {
 }
 ```
 
+## 데이터 분석 및 알림 시스템
+
+본 프로젝트는 비트코인 시장 데이터를 실시간으로 분석하고, 사용자에게 유용한 투자 정보를 제공합니다. 주요 기능은 다음과 같습니다:
+
+ 1. 거래량 분석 (VolumeAnalysisService)
+- 실시간 거래량 모니터링
+- 지난 7일 평균 대비 1.5배 이상 거래량 증가 시 급증으로 판단
+- 거래량 급증 감지 시 사용자에게 텔레그램 알림 전송
+
+ 2. 시장 진입 타이밍 분석 (MarketTimingService)
+- 거래량과 가격 데이터를 종합적으로 분석
+- 매수 신호: 거래량 급증 & 현재 가격이 평균 이하
+- 매도 신호: 거래량 급증 & 현재 가격이 평균 이상
+- 분석 결과를 텔레그램을 통해 사용자에게 실시간 전달
+
+ 3. 스케줄링 및 배치 처리
+- Quartz 스케줄러를 사용하여 매일 자정에 분석 작업 실행
+- Spring Batch를 통한 효율적인 데이터 처리 및 분석 수행
+
+### 시스템 구조
+1. **데이터 수집**: BitcoinDataService를 통해 실시간 시장 데이터 획득
+2. **데이터 저장**: BitcoinRepository를 사용하여 시계열 데이터 관리
+3. **분석 처리**:
+    - VolumeAnalysisService: 거래량 분석
+    - MarketTimingService: 시장 진입 타이밍 분석
+4. **스케줄링**:
+    - QuartzConfig: Quartz 작업 스케줄링 설정
+    - QuartzJob: 스케줄에 따른 배치 작업 실행
+5. **배치 처리**:
+    - BatchConfig: Spring Batch 작업 정의
+    - Tasklet: 실제 분석 로직 실행
+6. **알림 전송**: TelegramBot을 통한 사용자 알림 발송
+
+### 주요 특징
+- 실시간 데이터 분석과 정기적인 배치 분석을 결합한 하이브리드 접근 방식
+- 거래량과 가격 데이터를 복합적으로 분석하여 정확한 시장 신호 포착
+- Quartz와 Spring Batch를 활용한 안정적이고 확장 가능한 분석 시스템
+- 텔레그램 봇을 통한 즉각적이고 편리한 사용자 알림 시스템
+
+
 ### 뷰 (완성된 화면)
 ![비트코인-메인화면](https://github.com/user-attachments/assets/ac26882c-b296-4e64-b106-bd07fd2d87ff)
 
