@@ -1,4 +1,5 @@
-# 비트코인 투자 알림 서비스  ![image](https://github.com/user-attachments/assets/f0cbad1e-e0c5-492b-afdb-2e4890a154d0)
+# 비트코인 투자 알림 서비스  ![image](https://github.com/user-attachments/assets/af4df438-aba2-4ac4-92e7-1e6214280d5a)
+
 
 
 실시간 비트코인 가격 모니터링 및 투자 알림 서비스입니다.
