@@ -93,7 +93,8 @@ public class WebOAuthSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
-                        .anyRequest().permitAll());
+                .requestMatchers("/img/**", "/css/**", "/js/**").permitAll()
+                .anyRequest().permitAll());
 
         // OAuth2 로그인 설정 추가
         http.oauth2Login(oauth2 -> oauth2

@@ -57,6 +57,6 @@ public class HomeController {
             model.addAttribute("username", username);
         }
 
-        return "main";
+        return "main2";
     }
 }
