@@ -97,6 +97,16 @@ public class TelegramNotificationService {
 }
 ```
 
+### 뷰 (완성된 화면)
+![비트코인-메인화면](https://github.com/user-attachments/assets/ac26882c-b296-4e64-b106-bd07fd2d87ff)
+
+![비트코인-로그인](https://github.com/user-attachments/assets/046261a0-adf0-44ac-a56e-b26e1d551324)
+
+![비트코인-로그인후](https://github.com/user-attachments/assets/12636b36-8e2a-4076-8002-be8cb3670bd0)
+
+![텔레그램 성공](https://github.com/user-attachments/assets/a03ea087-a05a-427a-b41b-dfacc84c4a69)
+
+
 ## 문제 해결 기록
 
 ### 세션 관리 문제
