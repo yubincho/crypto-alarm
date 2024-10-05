@@ -23,7 +23,7 @@
 
 - Java 17
 - Spring Boot 3.2.10
-- WebSocket (업비트 Open API)
+- WebSocket 
 - OAuth2 (로그인)
 - Spring Batch
 - Quartz Scheduler
