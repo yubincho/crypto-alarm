@@ -34,7 +34,7 @@ public class MarketTimingService {
     }
 
     public void suggestMarketEntry(double currentVolume, double currentPrice) {
-        LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);  //
 
         // 지난 7일간의 평균 거래량과 가격 계산
         List<BitcoinEntity> lastWeekData = bitcoinRepository.findByTimestampAfter(oneWeekAgo);
@@ -43,7 +43,7 @@ public class MarketTimingService {
         double averagePrice = lastWeekData.stream()
                 .mapToDouble(BitcoinEntity::getTradePrice).average().orElse(0.0);
 
-        boolean volumeSpike = currentVolume > averageVolume * 1.5;
+        boolean volumeSpike = currentVolume > averageVolume * 1.5;  //
 
         String message;
         if (volumeSpike) {

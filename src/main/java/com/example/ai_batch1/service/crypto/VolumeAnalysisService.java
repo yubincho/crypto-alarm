@@ -37,7 +37,7 @@ public class VolumeAnalysisService {
 
     // 평균 거래량을 기반으로 급증 감지
     public boolean isVolumeSpike(double currentVolume) {
-        LocalDateTime onWeekAgo = LocalDateTime.now().minusDays(7);
+        LocalDateTime onWeekAgo = LocalDateTime.now().minusDays(7); //
 
         // 지난 7일간의 평균 거래량 계산
         List<BitcoinEntity> lastWeekData = bitcoinRepository.findByTimestampAfter(onWeekAgo);
@@ -47,7 +47,7 @@ public class VolumeAnalysisService {
                 .orElse(0.0);
 
         // 현재 거래량이 평균 거래량의 1.5배 이상인지 확인
-        return currentVolume > averageVolume * 1.5;
+        return currentVolume > averageVolume * 1.5;   //
     }
 
 

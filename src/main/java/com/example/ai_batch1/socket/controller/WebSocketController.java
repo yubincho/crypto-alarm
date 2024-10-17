@@ -11,7 +11,7 @@ public class WebSocketController {
     @MessageMapping("/sendMessage")
     @SendTo("/topic/priceAlert")
     public String sendMessage(String message) {
-        return "Current price: " + message; // 예시로 메시지를 그대로 반환
+        return "Current price: " + message;  // 메시지를 그대로 반환
     }
 
 

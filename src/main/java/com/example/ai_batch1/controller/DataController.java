@@ -3,6 +3,8 @@ package com.example.ai_batch1.controller;
 import com.example.ai_batch1.domain.crypto.BitcoinEntity;
 import com.example.ai_batch1.domain.crypto.BitcoinRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +18,14 @@ import java.util.Map;
 */
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*")
 public class DataController {
 
     private final BitcoinRepository bitcoinRepository;
 
 
     @PostMapping("/saveData")
-    public String saveCryptoData(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<String> saveCryptoData(@RequestBody Map<String, Object> data) {
         BitcoinEntity bitcoinData = BitcoinEntity.builder()
                 .tradePrice(convertToDouble(data.get("trade_price")))
                 .tradeVolume(convertToDouble(data.get("trade_volume")))
@@ -40,7 +43,7 @@ public class DataController {
         // 데이터베이스에 저장
         bitcoinRepository.save(bitcoinData);
 
-        return "Data saved successfully";
+        return ResponseEntity.ok("{\"status\":\"success\", \"message\":\"Data saved successfully\"}");
     }
 
     private Double convertToDouble(Object value) {
