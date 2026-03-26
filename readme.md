@@ -1,6 +1,6 @@
 # 비트코인 투자 알림 서비스
-![image](https://github.com/user-attachments/assets/748a03ad-c00c-4efd-8279-6074559653db)
 
+<img width="180" height="190" alt="bitcoin_image" src="https://github.com/user-attachments/assets/3dd8112e-b0f5-4f5c-9bce-a56ed52a8652" />
 
 
 실시간 비트코인 가격 모니터링 및 투자 알림 서비스입니다. 
