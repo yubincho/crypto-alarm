@@ -34,7 +34,7 @@
       text-align: center!important;
     }
     .error-page h1 {
-      font-size: 200px;
+      font-size: 63px;
       line-height: 1;
       font-weight: 600;
     }
@@ -134,7 +134,8 @@
           change_rate: jsonData.change_rate,
           high_price: jsonData.high_price,
           low_price: jsonData.low_price,
-          prev_closing_price: jsonData.prev_closing_price
+          prev_closing_price: jsonData.prev_closing_price,
+          ask_bid: jsonData.ask_bid  // 매수/매도 구분
         };
 
         // 수신한 데이터를 서버로 전송 (데이터베이스에 저장 요청)

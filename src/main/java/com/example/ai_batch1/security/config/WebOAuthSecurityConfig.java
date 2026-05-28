@@ -94,7 +94,9 @@ public class WebOAuthSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
                 .requestMatchers("/img/**", "/css/**", "/js/**").permitAll()
-                .anyRequest().permitAll());
+//                .anyRequest().permitAll());
+                .anyRequest().authenticated());
+
 
         // OAuth2 로그인 설정 추가
         http.oauth2Login(oauth2 -> oauth2
@@ -115,6 +117,13 @@ public class WebOAuthSecurityConfig {
 
         http.authenticationProvider(daoAuthenticationProvider());
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        // test
+//        http
+//                .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll()  // 모든 요청 허용
+//                )
+//                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 

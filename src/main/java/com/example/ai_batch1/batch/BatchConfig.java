@@ -1,5 +1,6 @@
 package com.example.ai_batch1.batch;
 
+import com.example.ai_batch1.service.crypto.BitcoinDataService;
 import com.example.ai_batch1.service.crypto.MarketTimingService;
 import com.example.ai_batch1.service.crypto.VolumeAnalysisService;
 import org.springframework.batch.core.Job;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableBatchProcessing
 public class BatchConfig {
 
+
     @Bean
     public Job myBatchJob(JobRepository jobRepository, Step step1) {
         return new JobBuilder("myBatchJob", jobRepository)
@@ -41,7 +43,8 @@ public class BatchConfig {
 
     @Bean
     public Tasklet lastJobTasklet(VolumeAnalysisService volumeAnalysisService,
-                                   MarketTimingService marketTimingService) {
+                                   MarketTimingService marketTimingService,
+                                  BitcoinDataService bitcoinDataService) {
         return (contribution, chunkContext) -> {
             System.out.println("Tasklet 실행 중...");
 
@@ -50,6 +53,9 @@ public class BatchConfig {
 
             // 2. 시장 타이밍 분석 및 알림 전송
             marketTimingService.marketTimingAnalyze();
+
+            // 8일 전 데이터 자동 삭제
+            bitcoinDataService.deleteOldData();
 
             return RepeatStatus.FINISHED;
         };

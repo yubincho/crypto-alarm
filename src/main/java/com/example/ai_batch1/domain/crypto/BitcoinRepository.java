@@ -12,4 +12,7 @@ public interface BitcoinRepository extends JpaRepository<BitcoinEntity, Long> {
 
     BitcoinEntity findTopByOrderByTimestampDesc();
 
+    void deleteByTimestampBefore(LocalDateTime timestamp);
+
+
 }

@@ -11,3 +11,4 @@ public class AiBatch1Application {
 	}
 
 }
+

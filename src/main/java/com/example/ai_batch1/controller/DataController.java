@@ -2,6 +2,7 @@ package com.example.ai_batch1.controller;
 
 import com.example.ai_batch1.domain.crypto.BitcoinEntity;
 import com.example.ai_batch1.domain.crypto.BitcoinRepository;
+import com.example.ai_batch1.service.crypto.VolumeAnalysisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class DataController {
 
     private final BitcoinRepository bitcoinRepository;
+    private final VolumeAnalysisService volumeAnalysisService;
 
 
     @PostMapping("/saveData")
@@ -37,11 +39,14 @@ public class DataController {
                 .highPrice(convertToDouble(data.get("high_price")))
                 .lowPrice(convertToDouble(data.get("low_price")))
                 .prevClosingPrice(convertToDouble(data.get("prev_closing_price")))
+                .askBid((String) data.get("ask_bid"))  //  추가!
                 .timestamp(LocalDateTime.now())
                 .build();
 
         // 데이터베이스에 저장
         bitcoinRepository.save(bitcoinData);
+
+        volumeAnalysisService.whaleDetection();  // 저장 직후 고래 감지 실행
 
         return ResponseEntity.ok("{\"status\":\"success\", \"message\":\"Data saved successfully\"}");
     }

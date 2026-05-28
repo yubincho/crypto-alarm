@@ -23,7 +23,8 @@ public class QuartzConfig {
                 .forJob(jobDetail)
                 .withIdentity("quartzTrigger")
                 .withSchedule(CronScheduleBuilder.cronSchedule("0 0 0 * * ?") // 매일 자정에 실행
-                    .withMisfireHandlingInstructionDoNothing())
+//                .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?") // 30초마다 실행
+                        .withMisfireHandlingInstructionDoNothing())
                 .build();
     }
 

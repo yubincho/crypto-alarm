@@ -48,6 +48,8 @@ public class VolumeAnalysisService {
 
         // 현재 거래량이 평균 거래량의 1.5배 이상인지 확인
         return currentVolume > averageVolume * 1.5;   //
+
+//        return true;  // 테스트용으로 항상 알림 발생
     }
 
 
@@ -64,5 +66,39 @@ public class VolumeAnalysisService {
 
         }
     }
+
+
+    // 고래 감지 로직 추가
+    public void whaleDetection() {
+        BitcoinEntity latestData = bitcoinRepository.findTopByOrderByTimestampDesc();
+        if (latestData == null) return;
+
+        double tradePrice = latestData.getTradePrice();
+        double tradeVolume = latestData.getTradeVolume();
+        String askBid = latestData.getAskBid();
+
+        // 단일 체결 금액 계산
+        double tradeAmount = tradePrice * tradeVolume;
+
+        String direction = "BID".equals(askBid) ? "🟢 매수" : "🔴 매도";
+
+        // 10억 이상 → 초대형 고래
+        if (tradeAmount >= 1_000_000_000) {
+            String message = "🚨 초대형 고래 감지!\n"
+                    + direction + " 체결\n"
+                    + "체결 금액: " + String.format("%,.0f", tradeAmount) + "원\n"
+                    + "체결 가격: " + String.format("%,.0f", tradePrice) + "원";
+            telegramBot.sendNotificationToEligibleUsers(message);
+
+            // 1억 이상 → 고래
+        } else if (tradeAmount >= 100_000_000) {
+            String message = "🐋 고래 감지!\n"
+                    + direction + " 체결\n"
+                    + "체결 금액: " + String.format("%,.0f", tradeAmount) + "원\n"
+                    + "체결 가격: " + String.format("%,.0f", tradePrice) + "원";
+            telegramBot.sendNotificationToEligibleUsers(message);
+        }
+    }
+
 
 }

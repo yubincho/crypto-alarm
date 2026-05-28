@@ -106,6 +106,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     // 알림 대상 사용자에게 메시지 전송
     public void sendNotificationToEligibleUsers(String message) {
+        // 테스트용 - 하드코딩된 chat_id로 바로 전송
+//        sendTextMessage(7167100057L, message);
+
         List<UserEntity> eligibleUsers = userRepository.findByNotificationsEnabledTrue();
         for (UserEntity user : eligibleUsers) {
             sendTextMessage(Long.parseLong(user.getTelegramChatId()), message);
