@@ -89,10 +89,11 @@ public class WebOAuthSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable)  // 배포시 ???
+        http.csrf(AbstractHttpConfigurer::disable)  // 배포시 수정
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))  //
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
+                .requestMatchers("/", "/login", "/oauth2/**", "/websocket/**").permitAll()
                 .requestMatchers("/img/**", "/css/**", "/js/**").permitAll()
 //                .anyRequest().permitAll());
                 .anyRequest().authenticated());
